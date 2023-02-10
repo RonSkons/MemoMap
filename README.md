@@ -10,6 +10,7 @@ Placing a memo takes two clicks, after which it is visible to everyone in the ar
 - Crowdsourced information for discovering hidden gems and enhancing community experience
 - No login required, open to everyone
 - Ideal for businesses to reach a wider audience and advertise products/services
+- Built using open-source libraries and APIs ([Leaflet](https://leafletjs.com/), [FingerPrintJS](https://github.com/fingerprintjs/fingerprintjs), [OpenStreetMap](https://www.openstreetmap.org/)) 
 
 ## Contribute
 
