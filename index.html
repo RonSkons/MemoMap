@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MemoMap</title>
+    <!-- Stylesheet -->
+    <!-- <link rel="stylesheet" href="style.css"/> -->
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <!-- Map View Code -->
+    <script src="main.js"></script>
+</head>
+<body class="container-fluid p-0">
+    <div id="map" class="vh-100"></div>
+    <div class="fixed-top pt-1">
+        <div class="text-center">
+            <button class="btn btn-success btn-lg m-1" data-toggle="modal" data-target="#addModal"><span class="bi bi-geo-alt-fill fa-lg"> Add Memo</span></button>
+            <button id="recenterButton" class="btn btn-primary btn-lg m-1"><span class="bi bi-compass fa-lg"> Recenter</span></button>
+        </div>
+    </div>
+    <div class="fixed-bottom pb-1 pl-1">
+            <button class="btn btn-dark m-1" data-toggle="modal" data-target="#aboutModal"><span class="bi bi-info-circle"> About MemoMap</span></button>
+            <a href="https://github.com/RonSkons" target="_blank" class="btn btn-dark m-1"><span class="bi bi-github"></span></a>
+    </div>
+    <script>
+        var map = L.map("map", {zoomControl: false}).fitWorld();
+
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            minZoom: 16,
+            attribution: "© OpenStreetMap"
+        }).addTo(map);
+        
+        $(window).on("load", recenter); // Recenter on initial load
+        $("#recenterButton").click(recenter); // Bind click event to recenter
+        getLocation(); // Initial location check
+        setInterval(getLocation, 4000); // Ping user location every 4s
+    </script>
+
+      <!-- "About" modal-->
+      <div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Error Acquiring Location</h5>
+            </div>
+            <div class="modal-body">
+                MemoMap needs access to your location in order to function.<br>
+                Once you've enabled location for MemoMap, reload the page.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" onClick="window.location.href=window.location.href">Reload Page</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- "About" modal-->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">About</h5>
+            </div>
+            <div class="modal-body">
+              <strong>MemoMap</strong> is a web-based mapping application that allows users to post and access location-based information. <br><br>
+              Created with a focus on interface simplicity, it enables the sharing of knowledge about the world around you. <br>
+              MemoMap doesn't require a login and is open-source, encouraging community contributions at all levels. <br><br>
+              Discover hidden gems and enhance your community experience, or use MemoMap to reach a wider audience as a business. <br><br>
+              Join us and start exploring the world in a new way!
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- "Add Memo" modal-->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Memo</h5>
+            </div>
+            <div class="modal-body">
+                <label for="newMemoText">Memo Message:</label>
+                <textarea class="form-control mt-1" id="newMemoText" rows="4" maxlength="200"></textarea>
+                <span class="float-end label label-default" id="characterCount"></span>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-success" id="createButton">Create Memo</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <script>
+        // Visual indicator for character limit
+        $("#characterCount").html($("#newMemoText").val().length + " / 200");
+        $("#newMemoText").keyup(function() {
+            $("#characterCount").html($("#newMemoText").val().length + " / 200");
+        });
+
+        // Bind click event
+        $("#createButton").click(post_marker);
+    </script>
+</body>
+</html>
