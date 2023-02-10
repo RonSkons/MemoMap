@@ -16,6 +16,8 @@ Placing a memo takes two clicks, after which it is visible to everyone in the ar
 MemoMap is an open-source project and contributions from the community are encouraged.
 Pull requests in the form of graphical and/or UI improvements are especially helpful.
 
+_NOTE: MemoMap is built on a LAMP stack and requires an appropriately-configured MySQL database to function. Documentation to come._
+
 ## Get Started
 
 To start using MemoMap, visit [memomap.me](https://memomap.me) and start exploring. Join the community, post some memos, and help annotate your neighborhood/hiking trail/campus/anything else!
