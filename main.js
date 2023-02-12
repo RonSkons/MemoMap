@@ -74,7 +74,11 @@ function updateUserLocation(locationEvent) {
     lastKnownLocation = locationEvent; // Update last known location
     if (!marker) {
         marker = L.marker([locationEvent.latitude, locationEvent.longitude], {interactive: false, bubblingMouseEvents: true});
-        marker.addTo(map);
+        map.addLayer(marker);
+    } else {
+        map.removeLayer(marker); // Remove marker so we can redraw it
+        marker = L.marker([locationEvent.latitude, locationEvent.longitude], {interactive: false, bubblingMouseEvents: true});
+        map.addLayer(marker);
     }
 }
 
