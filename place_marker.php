@@ -37,6 +37,8 @@ if ($conn->connect_error) {
     die("Error: " . $conn->connect_error);
 }
 
+$conn->set_charset("utf8mb4"); // Fix for broken diacritics (é, etc.) and emojis
+
 // Prepare statement
 if ($hash == "nofingerprint") {
     // User has blocked fingerprinting. Hash should be NULL.
