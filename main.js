@@ -104,6 +104,7 @@ function postMarker() {
             .then(text => {
                 if (text == "Success") {
                     updateMapMarkers(lastKnownLocation);
+                    $("#newMemoText").val("");
                 }
             });
         }
