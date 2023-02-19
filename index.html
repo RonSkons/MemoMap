@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>MemoMap</title>
-    <!-- Stylesheet -->
-    <!-- <link rel="stylesheet" href="style.css"/> -->
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
@@ -26,9 +24,25 @@
 <body class="container-fluid p-0">
     <div id="map" class="vh-100"></div>
     <div class="fixed-top pt-1">
-        <div class="text-center">
+      <div class="text-center">
+        <div class="dropdown">
             <button class="btn btn-success btn-lg m-1" data-toggle="modal" data-target="#addModal"><span class="bi bi-geo-alt-fill fa-lg"> Add Memo</span></button>
             <button id="recenterButton" class="btn btn-primary btn-lg m-1"><span class="bi bi-compass fa-lg"> Recenter</span></button>
+            <button id="nearMenuButton" class="btn btn-secondary btn-lg m-1 dropdown-toggle" data-toggle="dropdown"><span class="fa-lg">Nearby Memos</span></button>
+
+            <style>
+              /* Scrollable dropdown. TODO: Move to its own CSS file. */
+              .dropdown-menu {
+                overflow: hidden;
+                overflow-y: auto;
+                max-height: calc(100vh - 170px);
+              }
+            </style>
+
+            <div id="nearbyMenu" class="dropdown-menu m-1">
+              <a class="dropdown-item" href="#">Loading...</a>
+            </div>
+          </div>
         </div>
     </div>
     <div class="fixed-bottom pb-1 pl-1">
