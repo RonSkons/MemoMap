@@ -22,3 +22,15 @@ _NOTE: MemoMap is built on a LAMP stack and requires an appropriately-configured
 ## Get Started
 
 To start using MemoMap, visit [memomap.me](https://memomap.me) and start exploring. Join the community, post some memos, and help annotate your neighborhood/hiking trail/campus/anything else!
+
+## Ideas for Future Improvements:
+
+- Ditch fingerprinting for tried and tested logins to better identify users.
+- Improve security! The app is currently very susceptible to spam from malicious users.
+  - Implement a captcha-like system to counter bots
+- Language filtering / harmful content flagging
+- Rating system for memos
+  - Ratio of good:bad ratings impacts odds of memo being displayed
+- Cluster nearby markers in crowded areas
+- Allow users to edit their memos
+- Allow users to create memos that expire after some time
